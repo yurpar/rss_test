@@ -49,7 +49,20 @@ app.get('/sources/:name/list', async (req, res) => {
     res.send(resp);
 })
 
-app.get('/article/:id', async (req, res) => {
+
+app.get('/articles', async (req, res) => {
+    const resp = await articles.getAll(req.query.limit)
+        .then(result => ({
+            status: 'success',
+            result}))
+        .catch(err => ({
+            status: 'error',
+            error: err
+        }));
+    res.send(resp);
+})
+
+app.get('/articles/:id', async (req, res) => {
     const resp = await articles.getById(req.params.id)
         .then(result => ({
             status: 'success',
